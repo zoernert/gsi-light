@@ -33,11 +33,11 @@ if(window.localStorage.getItem("ext:"+extid)) {
 var node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:"./smart_contracts/"});
 
 // Fill View (HTML) using JQuery
-$('.account').html(node.wallet.address);
+$('.account').html(node.wallet.address.substr(2,6));
 
 
 function open_username(node) {
-	$('.account').html(resolve(node.wallet.address));
+	$('.account').html(resolve(node.wallet.address).substr(2,6));
 	node.roleLookup().then(function(rl) {
 		$('#brain_frm').hide();
 		$('#pk_frm').hide();
@@ -98,7 +98,7 @@ $('#open_username,#open_gsi').click(function() {
 							account_obj.decrypt(str).then(function(pk) {																
 								window.localStorage.setItem("ext:"+extid,pk);
 								node = new document.StromDAOBO.Node({external_id:extid,testMode:true,rpc:"https://fury.network/rpc",abilocation:abilocation});
-								$('.account').html(resolve(node.wallet.address));
+								$('.account').html(resolve(node.wallet.address).substr(2,6));
 								node.roleLookup().then(function(rl) {
 									rl.relations(node.wallet.address,42).then(function(tx) {
 										open_username(node);
