@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>StromDAO - Netzdienlichkeitsprämie</title>	
+    <link rel="stylesheet" href="./bootstrap.min.css">    
+    <style>
+    h3 { color:#909090; }
+    </style>
+  </head>
+  <body>
+	<nav class="navbar navbar-default">
+		<div class="navbar-left">
+			<span class="navbar-brand">
+		  <span class="glyphicon glyphicon-user"></span>&nbsp;<span class="account"></span>
+		  </span>
+		</div>
+		<div class="nav navbar-nav navbar-right" style="padding-right:25px;">
+			<strong>STROM</strong>DAO<br/>
+			<small><em>digital energy infrastructure for tomorrow.</em></small>
+		</div>
+	</nav>
+	<div class="container">			
+		<div id="brain_frm">	
+		<form action="" method="GET">
+			<div class="form-group">
+					<label for="plz">Postleitzahl</label>
+					<input type="text" class="form-control" id="plz" name="plz">		
+					<button id="open_gsi" class="btn btn-primary" style="margin:5px;" type="button">Öffnen (ohne Anmeldung)</button>				
+			</div>	
+			 <div class="form-group">
+					<label for="username">Benutzername</label>
+					<input type="text" class="form-control" id="username" name="username">						
+			</div>	
+			 <div class="form-group">
+					<label for="password">Passwort</label>
+					<input type="password" class="form-control" id="password" name="password">
+					<button id="open_username" class="btn btn-primary" style="margin:5px;" type="button">Öffnen</button>
+			</div>		
+		</form>
+		</div>
+		<div id="pk_frm" style="display:none">
+				<form action="" method="GET">
+					 <div class="form-group">
+							<label for="pk_secret">Privater Schlüssel</label>
+							<input type="text" class="form-control" id="pk_secret" name="pk_secret">						
+					</div>	
+					 <div class="form-group">
+							<button id="cancel_pk" class="btn btn-default" style="margin:5px;" type="button">Abbruch</button>
+							<button id="open_pk" class="btn btn-primary" style="margin:5px;" type="button">Öffnen</button>
+					</div>		
+				</form>
+		</div>	 
+		<div id="app" style="display:none">
+			<div class="panel panel-default" id="sessionmeter">
+			  <div class="panel-heading">Autostrom - Sitzung</div>
+			  <div class="panel-body">
+					<h4>Ladevorgang</h4>
+											
+					<button id="start_session" class="btn btn-primary" type="button" disabled="disabled">starten</button>
+					<button id="end_session" class="btn btn-danger" type="button" disabled="disabled">beenden</button>
+					
+					<hr/>
+					<h4>Arbeitspreis für Postleitzahl <span class="plz"></span> (Stand: <span id="time"></span>) - Autostrom</h4>
+					<table class="table table-condensed" id="gsi_table"><tr><td>wird geladen...</td></tr></table>
+			  </div>
+			</div>
+			<div class="panel panel-default" style="display:none" id="gridmeter">
+			  <div class="panel-heading">Hausanschluss/Netzanschluss</div>
+			  <div class="panel-body">
+					<h3>Zählerstand erfassen (in Wattstunden, Wh)</h3>				  
+					<div class="row">						
+						<div class="col-md-9">						
+						<input type="number" id="reading" class="form-control">											
+						</div>
+						<div class="col-md-3">
+						<button id="go" class="btn btn-danger">weiter &raquo;</button>			
+						</div>
+					</div>	 	
+			  </div>
+			</div>
+			<div class="panel panel-default" style="display:none" id="carmeter">
+			  <div class="panel-heading">Energiemenge des Ladevorgangs</div>
+			  <div class="panel-body">
+					<h3>Geladene Energiemenge des Autos (in Wattstunden, Wh)</h3>				  
+					<div class="row">						
+						<div class="col-md-9">						
+						<input type="number" id="reading2" class="form-control">											
+						</div>
+						<div class="col-md-3">
+						<button id="go2" class="btn btn-danger">weiter &raquo;</button>			
+						</div>
+					</div>	 	
+			  </div>
+			</div>	
+			<div class="panel panel-default" style="display:none" id="confirmation">
+			  <div class="panel-heading">Antrag Netzdienlichkeitsprämie</div>
+			  <div class="panel-body">
+					<h3>Sie bestätigen</h3>	
+					<table class="table table-condensed" id="confirmation_table">
+					
+					</table>			  
+					<div class="row">						
+						<div class="col-md-9">												
+						</div>
+						<div class="col-md-3">
+						<button id="go3" class="btn btn-danger">unterschreiben &raquo;</button>			
+						</div>
+					</div>	 	
+			  </div>
+			</div>	
+			<div class="panel panel-default" style="display:none" id="confirmed">
+			  <div class="panel-heading">Buchungsbestätigungen</div>
+			  <div class="panel-body">
+					<h3 id="donemark">Einen Augenblick bitte...</h3>	
+					<table class="table table-condensed" id="confirmed_table">
+					
+					</table>			  
+					<div class="row">						
+						<div class="col-md-9">												
+						</div>
+						<div class="col-md-3">
+						<button id="go4" class="btn btn-danger" disabled="disabled">beenden</button>			
+						</div>
+					</div>	 	
+			  </div>
+			</div>					
+		</div>	
+			<footer>
+	Weitere Informationen und Kontakt: <a href="https://autostrom.stromdao.de/" title="Autostrom mit Prämie für Netzdienlichkeit">Autostrom@STROMDAO</a>
+	</footer>
+	</div>  	
+    <script src="./jquery.min.js"></script>        
+    <script src="./bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="./loader.js"></script>
+	<script src="./base.js"></script>
+
+  </body>
+</html>
